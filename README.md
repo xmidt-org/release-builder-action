@@ -57,9 +57,9 @@ jobs:
       - uses: xmidt-org/release-builder-action@v1
         name: Generate Release
         id: generate_release
-      - name: Create Release
+      - uses: ncipollo/release-action@v1
+        name: Create Release
         id: create_release
-        uses: ncipollo/release-action@v1
         with:
           name: ${{ steps.generate_release.outputs.release-name }}
           draft: false
@@ -68,3 +68,5 @@ jobs:
           artifacts: "${{ steps.generate_release.outputs.artifact-dir }}/*"
           token: ${{ secrets.GITHUB_TOKEN }}
 ```
+
+**Note:** In the example we show using [ncipollo/release-action](https://github.com/ncipollo/release-action).  These work well together.
