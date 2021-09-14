@@ -1,0 +1,49 @@
+# SPDX-FileCopyrightText: 2021 Comcast Cable Communications Management, LLC
+# SPDX-License-Identifier: Apache-2.0
+
+name: 'Release Builder Action'
+description: 'Drive semantic versioned releases from the changelog file.'
+inputs:
+  changelog:
+    description: 'The changelog file to examine.'
+    required: false
+    default: 'CHANGELOG.md'
+  artifact-dir:
+    description: 'The directory to place the artifacts.'
+    required: false
+    default: 'artifacts'
+  meson-wrap:
+    description: 'If set to true a meson wrap file is included in the release.'
+    required: false
+    default: 'false'
+  meson-provides:
+    description: 'If defined sets the output meson dependency name (if a meson wrap is being generated).'
+    required: false
+    default: 'none'
+  verbose:
+    description: 'Set to 1 to enable more verbose debugging information.'
+    required: false
+    default: '0'
+outputs:
+  release-name:
+    description: 'Release name'
+    value: ${{ steps.make-release.outputs.release-name }}
+  release-body:
+    description: 'Release body'
+    value: ${{ steps.make-release.outputs.release-body }}
+  artifact-dir:
+    description: 'Artifact directory'
+    value: ${{ steps.make-release.outputs.artifact-dir }}
+runs:
+  using: "composite"
+  steps:
+    - id: make-release
+      run: |
+        ${{ github.action_path }}/release.sh \
+          ${{ github.repository }} \
+          ${{ inputs.changelog }} \
+          ${{ inputs.meson-wrap }} \
+          ${{ inputs.meson-provides }} \
+          ${{ inputs.artifact-dir }} \
+          ${{ inputs.verbose }} \
+      shell: bash
