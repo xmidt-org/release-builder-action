@@ -52,7 +52,8 @@ runs:
     - id: make-release
       shell: bash
       run: |
-        ${{ github.action_path }}/go run . \
+        cd ${{ github.action_path }}
+        go run . \
           --gh-repository  ${{ github.repository }}  \
           --gh-workspace   ${{ github.workspace }}   \
           --gh-token       ${{ inputs.gh-token }}       \
