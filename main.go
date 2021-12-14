@@ -36,19 +36,19 @@ func main() {
 func run() int {
 	p, err := parseAndValidateInput()
 	if err != nil {
-		Err("%s", err)
+		Err("Error validating input: %s", err)
 		return 1
 	}
 
 	err = p.ExamineProject()
 	if err != nil {
-		Err("%s", err)
+		Err("Error examining project: %s", err)
 		return 1
 	}
 
 	err = p.Release()
 	if err != nil {
-		Err("%s", err)
+		Err("Error releasing: %s", err)
 		return 1
 	}
 
