@@ -19,6 +19,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"os"
 
 	flag "github.com/spf13/pflag"
 	"github.com/xmidt-org/release-builder-action/project"
@@ -29,25 +30,30 @@ var (
 )
 
 func main() {
+	os.Exit(run())
+}
+
+func run() int {
 	p, err := parseAndValidateInput()
 	if err != nil {
 		Err("%s", err)
-		return
+		return 1
 	}
 
 	err = p.ExamineProject()
 	if err != nil {
 		Err("%s", err)
-		return
+		return 1
 	}
 
 	err = p.Release()
 	if err != nil {
 		Err("%s", err)
-		return
+		return 1
 	}
 
 	p.OutputData()
+	return 0
 }
 
 func parseAndValidateInput() (*project.Project, error) {
