@@ -4,12 +4,6 @@
 name: 'Release Builder Action'
 description: 'Drive semantic versioned releases from the changelog file.'
 inputs:
-  gh-repository:
-    description: 'The github.repository value.'
-    required: true
-  gh-workspace:
-    description: 'The github.workspace value.'
-    required: true
   gh-token:
     description: 'The GITHUB_TOKEN value to use of not a dry run.'
     required: false
@@ -56,10 +50,11 @@ runs:
   using: "composite"
   steps:
     - id: make-release
+      shell: bash
       run: |
-        go run . \
-          --gh-repository  ${{ inputs.gh-repository }}  \
-          --gh-workspace   ${{ inputs.gh-workspace }}   \
+        ${{ github.action_path }}/go run . \
+          --gh-repository  ${{ github.repository }}  \
+          --gh-workspace   ${{ github.workspace }}   \
           --gh-token       ${{ inputs.gh-token }}       \
           --changelog      ${{ inputs.changelog }}      \
           --tag-prefix     ${{ inputs.tag-prefix }}     \
@@ -67,5 +62,4 @@ runs:
           --shasum-file    ${{ inputs.shasum-file }}    \
           --meson-project  ${{ inputs.meson-project }}  \
           --meson-provides ${{ inputs.meson-provides }} \
-          --dry-run        ${{ inputs.dry-run }}        \
-      shell: bash
+          --dry-run        ${{ inputs.dry-run }}
