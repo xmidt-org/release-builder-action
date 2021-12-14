@@ -51,13 +51,13 @@ runs:
         pushd ${{ github.action_path }}
         go build
         popd
-        ${{ github.action_path }}/release-build-action \
-          --gh-repository  ${{ github.repository }}  \
-          --gh-workspace   ${{ github.workspace }}   \
-          --gh-token       ${{ inputs.gh-token }}       \
-          --changelog      ${{ inputs.changelog }}      \
-          --tag-prefix     ${{ inputs.tag-prefix }}     \
-          --artifact-dir   ${{ inputs.artifact-dir }}   \
-          --shasum-file    ${{ inputs.shasum-file }}    \
-          --meson-provides ${{ inputs.meson-provides }} \
+        ${{ github.action_path }}/release-builder-action \
+          --gh-repository  ${{ github.repository }}      \
+          --gh-workspace   ${{ github.workspace }}       \
+          --gh-token       ${{ inputs.gh-token }}        \
+          --changelog      ${{ inputs.changelog }}       \
+          --tag-prefix     ${{ inputs.tag-prefix }}      \
+          --artifact-dir   ${{ inputs.artifact-dir }}    \
+          --shasum-file    ${{ inputs.shasum-file }}     \
+          --meson-provides ${{ inputs.meson-provides }}  \
           --dry-run        ${{ inputs.dry-run }}
