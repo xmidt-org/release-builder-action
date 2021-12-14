@@ -46,7 +46,6 @@ type ProjectOpts struct {
 	ChangelogFile string
 	ArtifactDir   string
 	SHASumFile    string
-	Now           time.Time
 	Log           func(string, ...interface{})
 	Meson         Meson
 }
@@ -192,7 +191,8 @@ func (p *Project) Release() error {
 
 func (p *Project) OutputData() {
 	if p.FoundNewRelease() {
-		fmt.Printf("::set-output name=release-name::%s %s\n", p.nextRelease.Version, p.opts.Now.Format("2006-01-02"))
+		fmt.Printf("::set-output name=release-tag::%s\n", p.nextRelease.Version)
+		fmt.Printf("::set-output name=release-name::%s %s\n", p.nextRelease.Version, time.Now().Format("2006-01-02"))
 		fmt.Printf("::set-output name=release-body::%s\n", strings.Join(p.nextRelease.Body[1:], "\n"))
 		fmt.Printf("::set-output name=artifact-dir::%s\n", p.opts.ArtifactDir)
 	}
