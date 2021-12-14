@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.0.0]
+### Changed
+- Change from using the bash script to a go program that is able to error check
+  better each step.
+
 ## [1.0.0]
 ### Added
 - Initial script and action file.
@@ -19,5 +24,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Initial creation
 
-[Unreleased]: https://github.com/xmidt-org/xmidt-agent/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/xmidt-org/xmidt-agent/compare/v0.0.0...v1.0.0
+[Unreleased]: https://github.com/xmidt-org/xmidt-agent/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/xmidt-org/release-builder-action/compare/v1.0.0...v2.0.0
+[1.0.0]: https://github.com/xmidt-org/release-builder-action/compare/v0.0.0...v1.0.0
