@@ -17,24 +17,15 @@
 package project
 
 import (
-	"encoding/json"
 	"fmt"
-	"os/exec"
 )
 
 type Meson struct {
 	Provides string
-	setup    bool
-	info     mesonInfo
-}
-
-type mesonInfo struct {
-	Version         string `json:"version"`
-	DescriptiveName string `json:"descriptive_name"`
 }
 
 func (p *Project) generateMesonWrapper(path, tgzFile string) error {
-	if !p.opts.Meson.setup {
+	if p.opts.Meson.Provides == "" {
 		return nil
 	}
 
@@ -76,46 +67,8 @@ func (p *Project) generateMesonWrapper(path, tgzFile string) error {
 }
 
 func (p *Project) examineMesonProject() error {
-	found, err := p.fs.Exists("meson.build")
-	if err != nil {
-		return err
-	}
-
-	if !found {
-		return nil
-	}
-
-	p.opts.Log("Examining the meson project.")
-
-	if !p.opts.Meson.setup {
-		p.opts.Log("Setting up a meson project directory for examination. (%s)", mesonDirPath)
-		setup := exec.Command(mesonCmd, "setup", mesonDirPath)
-		out, err := setup.CombinedOutput()
-		if err != nil {
-			p.opts.Log("Error running meson: '%s'", string(out))
-			return err
-		}
-		p.opts.Meson.setup = true
-	}
-
-	p.opts.Log("Asking meson for project information.")
-	cmd := exec.Command(mesonCmd, "introspect", mesonDirPath, "--projectinfo")
-	out, err := cmd.Output()
-	if err != nil {
-		return err
-	}
-	if err = json.Unmarshal(out, &p.opts.Meson.info); err != nil {
-		return err
-	}
-
-	p.opts.Log("Validating that the release version in the meson.build file matches the version in %s.", p.opts.ChangelogFile)
-
-	v := p.opts.TagPrefix + p.opts.Meson.info.Version
-
-	if p.nextRelease.Version != v {
-		return fmt.Errorf("%w: %s declared '%s' but meson.build declared '%s'.  They must match.",
-			errVersionMismatch, p.opts.ChangelogFile, p.nextRelease.Version, v)
-	}
-
+	// TODO: To do this right we'd examine the meson file directly and validate
+	// the version number matches.  However, to do that with the tool as it stands
+	// today requires installing all the dependencies.
 	return nil
 }

@@ -27,21 +27,15 @@ import (
 	"github.com/xmidt-org/release-builder-action/git"
 )
 
-const (
-	mesonCmd     = "meson"
-	mesonDirPath = ".gha.release.tool"
-)
-
 var (
-	errRepoMissing = errors.New("repository must be specified")
-	//errBasePathMissing    = errors.New("basepath must be specified")
+	errRepoMissing        = errors.New("repository must be specified")
 	errTokenMissing       = errors.New("token must be specified")
 	errChangelogMissing   = errors.New("changelog must be specified")
 	errArtifactDirMissing = errors.New("artifact dir must be specified")
 	errSHAFileMissing     = errors.New("shasum-file must be specified")
 	errRepoFormatError    = errors.New("the slug format is invalid")
 	errPathNotDirectory   = errors.New("path is not a directory")
-	errVersionMismatch    = errors.New("the versions do not match")
+	//errVersionMismatch    = errors.New("the versions do not match")
 )
 
 type ProjectOpts struct {
