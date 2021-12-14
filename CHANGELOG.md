@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.0.1]
+### Fixed
+- Change the descriptions to not attempt to use the variable expansion tooling.
+
 ## [2.0.0]
 ### Changed
 - Change from using the bash script to a go program that is able to error check

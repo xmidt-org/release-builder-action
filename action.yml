@@ -5,13 +5,13 @@ name: 'Release Builder Action'
 description: 'Drive semantic versioned releases from the changelog file.'
 inputs:
   gh-repository:
-    description: 'The ${{ github.repository }} value.'
+    description: 'The github.repository value.'
     required: true
   gh-workspace:
-    description: 'The ${{ github.workspace }} value.'
+    description: 'The github.workspace value.'
     required: true
   gh-token:
-    description: 'The ${{ GITHUB_TOKEN }} value to use of not a dry run.'
+    description: 'The GITHUB_TOKEN value to use of not a dry run.'
     required: false
     default: ''
   changelog:
