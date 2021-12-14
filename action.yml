@@ -31,7 +31,7 @@ inputs:
     required: false
     default: 'sha256sum.txt'
   meson-project:
-    description: 'If set to true a meson wrap file is included in the release. ('true' or 'false')'
+    description: 'If set to true a meson wrap file is included in the release. (true or false)'
     required: false
     default: 'false'
   meson-provides:
@@ -39,7 +39,7 @@ inputs:
     required: false
     default: ''
   dry-run:
-    description: 'If the action should just perform a dry run. ('true' or 'false')'
+    description: 'If the action should just perform a dry run. (true or false)'
     required: false
     default: 'false'
 outputs:
