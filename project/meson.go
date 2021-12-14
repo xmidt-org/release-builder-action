@@ -34,12 +34,7 @@ type mesonInfo struct {
 }
 
 func (p *Project) generateMesonWrapper(path, tgzFile string) error {
-	found, err := p.fs.Exists("meson.build")
-	if err != nil {
-		return err
-	}
-
-	if !found {
+	if !p.opts.Meson.setup {
 		return nil
 	}
 
@@ -95,7 +90,9 @@ func (p *Project) examineMesonProject() error {
 	if !p.opts.Meson.setup {
 		p.opts.Log("Setting up a meson project directory for examination. (%s)", mesonDirPath)
 		setup := exec.Command(mesonCmd, "setup", mesonDirPath)
-		if err := setup.Run(); err != nil {
+		out, err := setup.CombinedOutput()
+		if err != nil {
+			p.opts.Log("Error running meson: '%s'", string(out))
 			return err
 		}
 		p.opts.Meson.setup = true
