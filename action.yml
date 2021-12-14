@@ -24,10 +24,6 @@ inputs:
     description: 'The filename to use for the shasum file.'
     required: false
     default: 'sha256sum.txt'
-  meson-project:
-    description: 'If set to true a meson wrap file is included in the release. (true or false)'
-    required: false
-    default: 'false'
   meson-provides:
     description: 'If defined sets the output meson dependency name (if a meson project).'
     required: false
@@ -52,8 +48,10 @@ runs:
     - id: make-release
       shell: bash
       run: |
-        cd ${{ github.action_path }}
-        go run . \
+        pushd ${{ github.action_path }}
+        go build
+        popd
+        ${{ github.action_path }}/release-build-action \
           --gh-repository  ${{ github.repository }}  \
           --gh-workspace   ${{ github.workspace }}   \
           --gh-token       ${{ inputs.gh-token }}       \
@@ -61,6 +59,5 @@ runs:
           --tag-prefix     ${{ inputs.tag-prefix }}     \
           --artifact-dir   ${{ inputs.artifact-dir }}   \
           --shasum-file    ${{ inputs.shasum-file }}    \
-          --meson-project  ${{ inputs.meson-project }}  \
           --meson-provides ${{ inputs.meson-provides }} \
           --dry-run        ${{ inputs.dry-run }}

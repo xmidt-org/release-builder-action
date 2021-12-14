@@ -54,7 +54,7 @@ type ProjectOpts struct {
 	SHASumFile    string
 	Now           time.Time
 	Log           func(string, ...interface{})
-	Meson         *Meson
+	Meson         Meson
 }
 
 type GitIF interface {
@@ -138,11 +138,7 @@ func (p *Project) ExamineProject() error {
 		return nil
 	}
 
-	if p.opts.Meson != nil {
-		return p.examineMesonProject()
-	}
-
-	return nil
+	return p.examineMesonProject()
 }
 
 func (p *Project) FoundNewRelease() bool {

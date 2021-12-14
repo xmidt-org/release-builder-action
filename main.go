@@ -56,7 +56,7 @@ func parseAndValidateInput() (*project.Project, error) {
 	// General project preference values
 	var cl, tagPrefix, artDir, shaFile, dryrunStr string
 	// Meson focused values
-	var mesonProject, provides string
+	var provides string
 
 	flag.StringVar(&slug, "gh-repository", "", "the github.repository")
 	flag.StringVar(&workspace, "gh-workspace", "", "the github.workspace")
@@ -65,7 +65,6 @@ func parseAndValidateInput() (*project.Project, error) {
 	flag.StringVar(&tagPrefix, "tag-prefix", "", "the tag prefix to use")
 	flag.StringVar(&artDir, "artifact-dir", "", "the artifact dir to use")
 	flag.StringVar(&shaFile, "shasum-file", "", "the shasum filename to use")
-	flag.StringVar(&mesonProject, "meson-project", "false", "if this is a meson project")
 	flag.StringVar(&provides, "meson-provides", "", "the meson dependency name")
 	flag.StringVar(&dryrunStr, "dry-run", "false", "if this is a dry run")
 	flag.Parse()
@@ -88,16 +87,9 @@ func parseAndValidateInput() (*project.Project, error) {
 		ArtifactDir:   artDir,
 		SHASumFile:    shaFile,
 		Log:           Info,
-	}
-
-	switch mesonProject {
-	case "true":
-		opts.Meson = &project.Meson{
+		Meson: project.Meson{
 			Provides: provides,
-		}
-	case "false":
-	default:
-		return nil, errBoolFormatError
+		},
 	}
 
 	p, err := project.NewProject(opts, dryrun)
