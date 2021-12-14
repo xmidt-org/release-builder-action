@@ -33,6 +33,9 @@ inputs:
     required: false
     default: 'false'
 outputs:
+  release-tag:
+    description: 'Release tag'
+    value: ${{ steps.make-release.outputs.release-tag }}
   release-name:
     description: 'Release Name'
     value: ${{ steps.make-release.outputs.release-name }}

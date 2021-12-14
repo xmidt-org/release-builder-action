@@ -191,10 +191,13 @@ func (p *Project) Release() error {
 
 func (p *Project) OutputData() {
 	if p.FoundNewRelease() {
-		fmt.Printf("::set-output name=release-name::%s %s\n", p.nextRelease.Version, time.Now().Format("2006-01-02"))
-		fmt.Printf("::set-output name=release-body::%s\n", strings.Join(p.nextRelease.Body[1:], "\\n"))
+		v := p.nextRelease.Version
+		now := time.Now().Format("2006-01-02")
+		body := strings.Join(p.nextRelease.Body[1:], "\\n")
+		fmt.Printf("::set-output name=release-tag::%s\n", v)
+		fmt.Printf("::set-output name=release-name::%s %s\n", v, now)
+		fmt.Printf("::set-output name=release-body::%s\n", body)
 		fmt.Printf("::set-output name=artifact-dir::%s\n", p.opts.ArtifactDir)
-		fmt.Printf("::set-output name=rtag::%s\n", p.nextRelease.Version)
 	}
 }
 
