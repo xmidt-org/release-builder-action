@@ -40,8 +40,8 @@ outputs:
     description: 'Release Name'
     value: ${{ steps.make-release.outputs.release-name }}
   release-body:
-    description: 'Release Body'
-    value: ${{ steps.make-release.outputs.release-body }}
+    description: 'Release Body File'
+    value: ${{ steps.make-release.outputs.release-body-file }}
   artifact-dir:
     description: 'Artifact Directory'
     value: ${{ steps.make-release.outputs.artifact-dir }}

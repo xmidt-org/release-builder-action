@@ -52,7 +52,12 @@ func run() int {
 		return 1
 	}
 
-	p.OutputData()
+	err = p.OutputData()
+	if err != nil {
+		Err("Error outputing: %s", err)
+		return 1
+	}
+
 	return 0
 }
 

@@ -27,6 +27,10 @@ import (
 	"github.com/xmidt-org/release-builder-action/git"
 )
 
+const (
+	releaseBodyFile = ".release-body.md"
+)
+
 var (
 	errRepoMissing        = errors.New("repository must be specified")
 	errTokenMissing       = errors.New("token must be specified")
@@ -189,16 +193,29 @@ func (p *Project) Release() error {
 	return p.git.PushTags(p.opts.Token)
 }
 
-func (p *Project) OutputData() {
+func (p *Project) OutputData() error {
 	if p.FoundNewRelease() {
 		v := p.nextRelease.Version
 		now := time.Now().Format("2006-01-02")
-		body := strings.Join(p.nextRelease.Body[1:], "\\n")
+
+		f, err := p.fs.Create(releaseBodyFile)
+		if err != nil {
+			return fmt.Errorf("%w: unable to create file '%s'", err, releaseBodyFile)
+		}
+		defer f.Close()
+		for _, line := range p.nextRelease.Body[1:] {
+			_, err = fmt.Fprintln(f, line)
+			if err != nil {
+				return fmt.Errorf("%w: unable to write to file '%s'", err, releaseBodyFile)
+			}
+		}
+
 		fmt.Printf("::set-output name=release-tag::%s\n", v)
 		fmt.Printf("::set-output name=release-name::%s %s\n", v, now)
-		fmt.Printf("::set-output name=release-body::%s\n", body)
+		fmt.Printf("::set-output name=release-body-file::%s\n", releaseBodyFile)
 		fmt.Printf("::set-output name=artifact-dir::%s\n", p.opts.ArtifactDir)
 	}
+	return nil
 }
 
 func (p *Project) getReleaseSlug() string {
