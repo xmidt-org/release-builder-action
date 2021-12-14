@@ -39,7 +39,7 @@ outputs:
   release-name:
     description: 'Release Name'
     value: ${{ steps.make-release.outputs.release-name }}
-  release-body:
+  release-body-file:
     description: 'Release Body File'
     value: ${{ steps.make-release.outputs.release-body-file }}
   artifact-dir:
