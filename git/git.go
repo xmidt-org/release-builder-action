@@ -111,7 +111,9 @@ func (g *Git) CreateArchive(slug, version, format, path string) (string, error) 
 		version,
 	}
 
-	_, err := exec.Command("git", args...).Output()
+	cmd := exec.Command("git", args...)
+	cmd.Dir = path
+	_, err := cmd.Output()
 	if err != nil {
 		return "", fmt.Errorf("%w: unable to generate the %s archive", err, format)
 	}
