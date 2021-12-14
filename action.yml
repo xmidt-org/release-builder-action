@@ -4,46 +4,68 @@
 name: 'Release Builder Action'
 description: 'Drive semantic versioned releases from the changelog file.'
 inputs:
+  gh-repository:
+    description: 'The ${{ github.repository }} value.'
+    required: true
+  gh-workspace:
+    description: 'The ${{ github.workspace }} value.'
+    required: true
+  gh-token:
+    description: 'The ${{ GITHUB_TOKEN }} value to use of not a dry run.'
+    required: false
+    default: ''
   changelog:
     description: 'The changelog file to examine.'
     required: false
     default: 'CHANGELOG.md'
+  tag-prefix:
+    description: 'Any prefix for the tag used.'
+    required: false
+    default: 'v'
   artifact-dir:
-    description: 'The directory to place the artifacts.'
+    description: 'The directory to use for the artifacts generated and signed.'
     required: false
     default: 'artifacts'
-  meson-wrap:
-    description: 'If set to true a meson wrap file is included in the release.'
+  shasum-file:
+    description: 'The filename to use for the shasum file.'
+    required: false
+    default: 'sha256sum.txt'
+  meson-project:
+    description: 'If set to true a meson wrap file is included in the release. ('true' or 'false')'
     required: false
     default: 'false'
   meson-provides:
-    description: 'If defined sets the output meson dependency name (if a meson wrap is being generated).'
+    description: 'If defined sets the output meson dependency name (if a meson project).'
     required: false
-    default: 'none'
-  verbose:
-    description: 'Set to 1 to enable more verbose debugging information.'
+    default: ''
+  dry-run:
+    description: 'If the action should just perform a dry run. ('true' or 'false')'
     required: false
-    default: '0'
+    default: 'false'
 outputs:
   release-name:
-    description: 'Release name'
+    description: 'Release Name'
     value: ${{ steps.make-release.outputs.release-name }}
   release-body:
-    description: 'Release body'
+    description: 'Release Body'
     value: ${{ steps.make-release.outputs.release-body }}
   artifact-dir:
-    description: 'Artifact directory'
+    description: 'Artifact Directory'
     value: ${{ steps.make-release.outputs.artifact-dir }}
 runs:
   using: "composite"
   steps:
     - id: make-release
       run: |
-        ${{ github.action_path }}/release.sh \
-          ${{ github.repository }} \
-          ${{ inputs.changelog }} \
-          ${{ inputs.meson-wrap }} \
-          ${{ inputs.meson-provides }} \
-          ${{ inputs.artifact-dir }} \
-          ${{ inputs.verbose }} \
+        go run . \
+          --gh-repository  ${{ inputs.gh-repository }}  \
+          --gh-workspace   ${{ inputs.gh-workspace }}   \
+          --gh-token       ${{ inputs.gh-token }}       \
+          --changelog      ${{ inputs.changelog }}      \
+          --tag-prefix     ${{ inputs.tag-prefix }}     \
+          --artifact-dir   ${{ inputs.artifact-dir }}   \
+          --shasum-file    ${{ inputs.shasum-file }}    \
+          --meson-project  ${{ inputs.meson-project }}  \
+          --meson-provides ${{ inputs.meson-provides }} \
+          --dry-run        ${{ inputs.dry-run }}        \
       shell: bash

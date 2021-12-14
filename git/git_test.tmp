@@ -1,0 +1,50 @@
+/**
+ *  Copyright (c) 2021  Comcast Cable Communications Management, LLC
+ *  Copyright (c) 2021  Weston Schmidt
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package git
+
+import (
+	"testing"
+
+	gba "github.com/Maldris/go-billy-afero"
+	"github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/plumbing/cache"
+	"github.com/go-git/go-git/v5/storage/filesystem"
+	"github.com/spf13/afero"
+	"github.com/stretchr/testify/assert"
+)
+
+func getGitRepo() (*afero.Afero, *git.Repository, error) {
+	fs := &afero.Afero{
+		Fs: afero.NewMemMapFs(),
+	}
+
+	billy := gba.New(fs.Fs, "/", false)
+	storage := filesystem.NewStorage(billy, cache.NewObjectLRUDefault())
+	repo, err := git.Init(storage, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+	return fs, repo, nil
+}
+
+func TestExamineProject(t *testing.T) {
+	assert := assert.New(t)
+	p := Project{}
+
+	err := p.ExamineProject()
+}
