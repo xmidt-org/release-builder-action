@@ -27,7 +27,7 @@ inputs:
   meson-provides:
     description: 'If defined sets the output meson dependency name (if a meson project).'
     required: false
-    default: '_'
+    default: 'none'
   dry-run:
     description: 'If the action should just perform a dry run. (true or false)'
     required: false
