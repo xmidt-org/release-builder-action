@@ -25,8 +25,19 @@ type Meson struct {
 }
 
 func (p *Project) generateMesonWrapper(path, tgzFile string) error {
-	if p.opts.Meson.Provides == "" {
+
+	found, err := p.fs.Exists("meson.build")
+	if err != nil {
+		return err
+	}
+
+	if !found {
 		return nil
+	}
+
+	provides := p.opts.Meson.Provides
+	if len(provides) == 0 {
+		provides = p.repoName
 	}
 
 	p.opts.Log("Generating the meson wrapper file.")
@@ -49,9 +60,9 @@ func (p *Project) generateMesonWrapper(path, tgzFile string) error {
 		slug,
 		p.opts.Slug, p.nextRelease.Version, slug,
 		sha,
-		p.opts.Meson.Provides, p.opts.Meson.Provides)
+		provides, provides)
 
-	file := path + "/" + p.repoName + ".wrap"
+	file := path + "/" + provides + ".wrap"
 	f, err := p.fs.Create(file)
 	if err != nil {
 		return fmt.Errorf("%w: unable to create file '%s'", err, file)
