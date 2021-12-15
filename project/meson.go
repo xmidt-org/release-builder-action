@@ -36,7 +36,7 @@ func (p *Project) generateMesonWrapper(path, tgzFile string) error {
 	}
 
 	provides := p.opts.Meson.Provides
-	if len(provides) == 0 {
+	if provides == "_" {
 		provides = p.repoName
 	}
 
