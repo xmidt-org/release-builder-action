@@ -1,24 +1,24 @@
 # Release Builder Action
-An action that builds release source artifacts and notes from the changelog file.
+An action that builds release source artifacts, generates a sha256sum for all artifacts,
+and extracts release notes from the changelog file, placing them in the github release.
 
 ## Motivation
 
 ### What it does?
 
 - Collect the snapshot of the repository as a tarball and zip file as artifacts.
-- Optionally generates a [Meson](https://mesonbuild.com/) wrap file to associate with the release.
 - Generates release notes based on the [changelog](https://keepachangelog.com/en/1.0.0/) file present and the tag.
-- Generates sha256sum values for assets.
+- Generates sha256sum values for all assets.
 - Uploads the collection of source artifacts and sha256sum value with release notes as a release.
+- Optionally generates a [Meson](https://mesonbuild.com/) wrap file to associate with the release.
 
-### Why do all this work?
+### Why do this?
 
-1. It is really handy with the changelog based tag (TBD) action to be able
-   to release artifacts automatically by simply updating the project CHANGELOG.md
-   and merging the change to main.
+1. It is really handy to create a quality release based on simply updating the
+   CHANGELOG.md file.
 2. If you are using the Meson build based project the automatic generation of
    the meson wrap file makes inclusion into other projects simple.
-1. Github has a long standing bug that the yocto community has run into regarding
+3. Github has a long standing bug that the yocto community has run into regarding
    the checksum values and source tarball/zip files not being 100% stable at all
    times.  A workaround to this is to build your own source artifacts, calculate
    the sha256sum and upload them yourself.
