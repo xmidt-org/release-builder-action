@@ -4,7 +4,7 @@
 name: 'Release Builder Action'
 description: 'Drive semantic versioned releases from the changelog file.'
 branding:
-  icon: pen-tool
+  icon: archive
   color: 'green'
 inputs:
   gh-token:
