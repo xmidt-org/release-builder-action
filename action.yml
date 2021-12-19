@@ -3,6 +3,9 @@
 
 name: 'Release Builder Action'
 description: 'Drive semantic versioned releases from the changelog file.'
+branding:
+  icon: pen-tool
+  color: 'green'
 inputs:
   gh-token:
     description: 'The GITHUB_TOKEN value to use of not a dry run.'
