@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.0.0]
+### Changed
+- The external interface uses a release body file instead of a block of text.
+
 ## [2.0.2]
 ### Fixed
 - Change the descriptions to not use nested ' characters.
