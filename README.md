@@ -62,7 +62,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Generate Release Bundle
-        uses: xmidt-org/release-builder-action@v2
+        uses: xmidt-org/release-builder-action@v3
         id: bundle
         with:
           gh-token: ${{ secrets.TOKEN }}
