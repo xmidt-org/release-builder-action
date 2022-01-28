@@ -82,7 +82,7 @@ func (g *Git) TagHead(tag, msg string) error {
 
 // PushTags pushes the tags to the upstream/remote repo.
 func (g *Git) PushTags(token string) error {
-	err := g.repo.Push(&git.PushOptions{
+	opts := &git.PushOptions{
 		RemoteName: "origin",
 		Progress:   os.Stdout,
 		RefSpecs:   []config.RefSpec{config.RefSpec("refs/tags/*:refs/tags/*")},
@@ -90,9 +90,13 @@ func (g *Git) PushTags(token string) error {
 			Username: "ignored",
 			Password: token,
 		},
-	})
+	}
 
-	if err != nil {
+	if err := opts.Validate(); err != nil {
+		return fmt.Errorf("%w: failed opts.PushOptions.Validate()", err)
+	}
+
+	if err := g.repo.Push(opts); err != nil {
 		return fmt.Errorf("%w: failed repo.Push()", err)
 	}
 
