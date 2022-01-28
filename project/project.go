@@ -238,6 +238,7 @@ func (p *Project) examineTags() error {
 			p.nextRelease = &rel
 			return nil
 		}
+		break
 	}
 
 	return nil
