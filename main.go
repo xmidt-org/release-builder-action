@@ -84,9 +84,6 @@ func parseAndValidateInput() (*project.Project, error) {
 		},
 	}
 
-	Info("BasePath:      '" + opts.BasePath + "'")
-	Info("ChangelogFile: '" + opts.ChangelogFile + "'")
-
 	p, err := project.NewProject(opts, dryrun)
 	if err != nil {
 		return nil, err

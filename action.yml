@@ -57,11 +57,6 @@ runs:
         pushd ${{ github.action_path }}
         go build
         popd
-        echo "github.repository: '${{ github.repository }}'"
-        echo "github.workspace:  '${{ github.workspace }}'"
-        echo "inputs.changelog:  '${{ inputs.changelog }}'"
-        echo "inputs.gh-token:   '${{ inputs.gh-token }}'"
-        echo "inputs.dry-run:    '${{ inputs.dry-run }}'"
         INPUTS_SLUG="${{ github.repository }}" \
         INPUTS_WORKSPACE="${{ github.workspace }}" \
         INPUTS_TOKEN="${{ inputs.gh-token }}" \
