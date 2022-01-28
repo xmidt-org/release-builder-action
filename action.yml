@@ -60,13 +60,13 @@ runs:
         echo "github.repository: '${{ github.repository }}'"
         echo "github.workspace:  '${{ github.workspace }}'"
         echo "inputs.changelog:  '${{ inputs.changelog }}'"
-        ${{ github.action_path }}/release-builder-action \
-          --gh-repository  ${{ github.repository }}      \
-          --gh-workspace   ${{ github.workspace }}       \
-          --gh-token       ${{ inputs.gh-token }}        \
-          --changelog      ${{ inputs.changelog }}       \
-          --tag-prefix     ${{ inputs.tag-prefix }}      \
-          --artifact-dir   ${{ inputs.artifact-dir }}    \
-          --shasum-file    ${{ inputs.shasum-file }}     \
-          --meson-provides ${{ inputs.meson-provides }}  \
-          --dry-run        ${{ inputs.dry-run }}
+        INPUTS_SLUG="${{ github.repository }}" \
+        INPUTS_WORKSPACE="${{ github.workspace }}" \
+        INPUTS_TOKEN="${{ inputs.gh-token }}" \
+        INPUTS_CHANGELOG="${{ inputs.changelog }}" \
+        INPUTS_TAG_PREFIX="${{ inputs.tag-prefix }}" \
+        INPUTS_ARTIFACT_DIR="${{ inputs.artifact-dir }}" \
+        INPUTS_SHASUM_FILE="${{ inputs.shasum-file }}" \
+        INPUTS_MESON_PROVIDES="${{ inputs.meson-provides }}" \
+        INPUTS_DRY_RUN="${{ inputs.dry-run }}" \
+        ${{ github.action_path }}/release-builder-action

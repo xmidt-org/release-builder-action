@@ -21,7 +21,6 @@ import (
 	"fmt"
 	"os"
 
-	flag "github.com/spf13/pflag"
 	"github.com/xmidt-org/release-builder-action/project"
 )
 
@@ -62,26 +61,8 @@ func run() int {
 }
 
 func parseAndValidateInput() (*project.Project, error) {
-	// Github focused values
-	var slug, workspace, token string
-	// General project preference values
-	var cl, tagPrefix, artDir, shaFile, dryrunStr string
-	// Meson focused values
-	var provides string
-
-	flag.StringVar(&slug, "gh-repository", "", "the github.repository")
-	flag.StringVar(&workspace, "gh-workspace", "", "the github.workspace")
-	flag.StringVar(&token, "gh-token", "", "the GITHUB_TOKEN that will allow you to tag and release")
-	flag.StringVar(&cl, "changelog", "", "the changelog file to examine")
-	flag.StringVar(&tagPrefix, "tag-prefix", "", "the tag prefix to use")
-	flag.StringVar(&artDir, "artifact-dir", "", "the artifact dir to use")
-	flag.StringVar(&shaFile, "shasum-file", "", "the shasum filename to use")
-	flag.StringVar(&provides, "meson-provides", "", "the meson dependency name")
-	flag.StringVar(&dryrunStr, "dry-run", "false", "if this is a dry run")
-	flag.Parse()
-
 	dryrun := false
-	switch dryrunStr {
+	switch os.Getenv("INPUTS_DRY_RUN") {
 	case "true":
 		dryrun = true
 	case "false":
@@ -90,16 +71,16 @@ func parseAndValidateInput() (*project.Project, error) {
 	}
 
 	opts := project.ProjectOpts{
-		Slug:          slug,
-		BasePath:      workspace,
-		Token:         token,
-		TagPrefix:     tagPrefix,
-		ChangelogFile: cl,
-		ArtifactDir:   artDir,
-		SHASumFile:    shaFile,
+		Slug:          os.Getenv("INPUTS_SLUG"),
+		BasePath:      os.Getenv("INPUTS_WORKSPACE"),
+		Token:         os.Getenv("INPUTS_TOKEN"),
+		TagPrefix:     os.Getenv("INPUTS_TAG_PREFIX"),
+		ChangelogFile: os.Getenv("INPUTS_CHANGELOG"),
+		ArtifactDir:   os.Getenv("INPUTS_ARTIFACT_DIR"),
+		SHASumFile:    os.Getenv("INPUTS_SHASUM_FILE"),
 		Log:           Info,
 		Meson: project.Meson{
-			Provides: provides,
+			Provides: os.Getenv("INPUTS_MESON_PROVIDES"),
 		},
 	}
 
