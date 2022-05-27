@@ -150,6 +150,11 @@ func (p *Project) Release() error {
 
 	p.opts.Log("Prepairing the release: %s.", p.nextRelease.Version)
 
+	if p.dryRun {
+		p.opts.Log("This is a dry run, do not alter the repo or create artifacts.")
+		return nil
+	}
+
 	p.opts.Log("Tagging the repository.")
 	v := p.nextRelease.Version
 	if err := p.git.TagHead(v, "Releasing: "+v); err != nil {
@@ -184,11 +189,6 @@ func (p *Project) Release() error {
 		return err
 	}
 
-	if p.dryRun {
-		p.opts.Log("This is a dry run, not pushing the tags.")
-		return nil
-	}
-
 	p.opts.Log("Pushing the tags to the upstream repository.")
 	return p.git.PushTags(p.opts.Token)
 }
@@ -198,15 +198,17 @@ func (p *Project) OutputData() error {
 		v := p.nextRelease.Version
 		now := time.Now().Format("2006-01-02")
 
-		f, err := p.fs.Create(releaseBodyFile)
-		if err != nil {
-			return fmt.Errorf("%w: unable to create file '%s'", err, releaseBodyFile)
-		}
-		defer f.Close()
-		for _, line := range p.nextRelease.Body[1:] {
-			_, err = fmt.Fprintln(f, line)
+		if p.dryRun {
+			f, err := p.fs.Create(releaseBodyFile)
 			if err != nil {
-				return fmt.Errorf("%w: unable to write to file '%s'", err, releaseBodyFile)
+				return fmt.Errorf("%w: unable to create file '%s'", err, releaseBodyFile)
+			}
+			defer f.Close()
+			for _, line := range p.nextRelease.Body[1:] {
+				_, err = fmt.Fprintln(f, line)
+				if err != nil {
+					return fmt.Errorf("%w: unable to write to file '%s'", err, releaseBodyFile)
+				}
 			}
 		}
 
