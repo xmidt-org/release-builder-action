@@ -1,9 +1,7 @@
 # Release Builder Action
 [![Build Status](https://github.com/xmidt-org/release-builder-action/actions/workflows/ci.yml/badge.svg)](https://github.com/xmidt-org/release-builder-action/actions/workflows/ci.yml)
-[![Dependency Updateer](https://github.com/xmidt-org/release-builder-action/actions/workflows/updater.yml/badge.svg)](https://github.com/xmidt-org/release-builder-action/actions/workflows/updater.yml)
 [![codecov.io](http://codecov.io/github/xmidt-org/release-builder-action/coverage.svg?branch=main)](http://codecov.io/github/xmidt-org/release-builder-action?branch=main)
 [![Go Report Card](https://goreportcard.com/badge/github.com/xmidt-org/release-builder-action)](https://goreportcard.com/report/github.com/xmidt-org/release-builder-action)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=xmidt-org_release-builder-action&metric=alert_status)](https://sonarcloud.io/dashboard?id=xmidt-org_release-builder-action)
 [![Apache V2 License](http://img.shields.io/badge/license-Apache%20V2-blue.svg)](https://github.com/xmidt-org/release-builder-action/blob/main/LICENSE)
 [![GitHub Release](https://img.shields.io/github/release/xmidt-org/release-builder-action.svg)](CHANGELOG.md)
 
