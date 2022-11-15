@@ -11,7 +11,7 @@ require (
 	github.com/imdario/mergo v0.3.13 // indirect
 	github.com/kevinburke/ssh_config v1.2.0 // indirect
 	github.com/sergi/go-diff v1.2.0 // indirect
-	github.com/spf13/afero v1.9.2
+	github.com/spf13/afero v1.9.3
 	github.com/stretchr/testify v1.8.1
 	github.com/xanzy/ssh-agent v0.3.1 // indirect
 	github.com/xmidt-org/gokeepachangelog v0.0.2
