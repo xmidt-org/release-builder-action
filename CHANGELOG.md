@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [3.0.1]
+## [v3.0.1]
 ### Changed
 - Write to GITHUB_ENV instead of set-output.
 
