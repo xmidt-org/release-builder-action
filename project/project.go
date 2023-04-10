@@ -212,10 +212,10 @@ func (p *Project) OutputData() error {
 			}
 		}
 
-		fmt.Printf("::set-output name=release-tag::%s\n", v)
-		fmt.Printf("::set-output name=release-name::%s %s\n", v, now)
-		fmt.Printf("::set-output name=release-body-file::%s\n", releaseBodyFile)
-		fmt.Printf("::set-output name=artifact-dir::%s\n", p.opts.ArtifactDir)
+		fmt.Printf("release-tag=%s >> $GITHUB_ENV\n", v)
+		fmt.Printf("release-name=%s %s >> $GITHUB_ENV\n", v, now)
+		fmt.Printf("release-body-file=%s >> $GITHUB_ENV\n", releaseBodyFile)
+		fmt.Printf("artifact-dir=%s >> $GITHUB_ENV\n", p.opts.ArtifactDir)
 	}
 	return nil
 }
