@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.0.1]
+### Changed
+- Write to GITHUB_ENV instead of set-output.
+
 ## [3.0.0]
 ### Changed
 - The external interface uses a release body file instead of a block of text.
@@ -36,7 +40,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Initial creation
 
-[Unreleased]: https://github.com/xmidt-org/release-builder-action/compare/v2.0.2...HEAD
+[Unreleased]: https://github.com/xmidt-org/release-builder-action/compare/v3.0.1...HEAD
+[3.0.0]: https://github.com/xmidt-org/release-builder-action/compare/v3.0.0...v3.0.1
+[2.0.2]: https://github.com/xmidt-org/release-builder-action/compare/v2.0.2...v3.0.0
 [2.0.2]: https://github.com/xmidt-org/release-builder-action/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/xmidt-org/release-builder-action/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/xmidt-org/release-builder-action/compare/v1.0.0...v2.0.0
