@@ -1,3 +1,7 @@
+# Archiving The Repo
+
+[GoReleaser](https://goreleaser.com/) does a better job than this action, and with no users now we are archiving the repo.
+
 # Release Builder Action
 [![Build Status](https://github.com/xmidt-org/release-builder-action/actions/workflows/ci.yml/badge.svg)](https://github.com/xmidt-org/release-builder-action/actions/workflows/ci.yml)
 [![codecov.io](http://codecov.io/github/xmidt-org/release-builder-action/coverage.svg?branch=main)](http://codecov.io/github/xmidt-org/release-builder-action?branch=main)
