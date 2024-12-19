@@ -185,7 +185,7 @@ func (p *Project) OutputData() error {
 		v := p.nextRelease.Version
 		now := time.Now().Format("2006-01-02")
 
-		if p.dryRun {
+		if !p.dryRun {
 			f, err := p.fs.Create(releaseBodyFile)
 			if err != nil {
 				return fmt.Errorf("%w: unable to create file '%s'", err, releaseBodyFile)
