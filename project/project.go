@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	gh "github.com/sethvargo/go-githubactions"
 	"github.com/spf13/afero"
 	changelog "github.com/xmidt-org/gokeepachangelog"
 	"github.com/xmidt-org/release-builder-action/git"
@@ -198,10 +199,10 @@ func (p *Project) OutputData() error {
 			}
 		}
 
-		fmt.Printf("release-tag=%s >> $GITHUB_OUTPUT\n", v)
-		fmt.Printf("release-name=%s %s >> $GITHUB_OUTPUT\n", v, now)
-		fmt.Printf("release-body-file=%s >> $GITHUB_OUTPUT\n", releaseBodyFile)
-		fmt.Printf("artifact-dir=%s >> $GITHUB_OUTPUT\n", p.opts.ArtifactDir)
+		gh.SetOutput("release-tag", v)
+		gh.SetOutput("release-name", v+" "+now)
+		gh.SetOutput("release-body-file", releaseBodyFile)
+		gh.SetOutput("artifact-dir", p.opts.ArtifactDir)
 	}
 	return nil
 }
