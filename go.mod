@@ -1,13 +1,12 @@
 module github.com/xmidt-org/release-builder-action
 
 go 1.22.0
-
-toolchain go1.23.1
+toolchain go1.24.1
 
 require (
 	github.com/go-git/go-git/v5 v5.13.2
 	github.com/sethvargo/go-githubactions v1.3.0
-	github.com/spf13/afero v1.12.0
+	github.com/spf13/afero v1.14.0
 	github.com/stretchr/testify v1.10.0
 	github.com/xmidt-org/gokeepachangelog v0.0.2
 )
@@ -34,7 +33,7 @@ require (
 	golang.org/x/crypto v0.32.0 // indirect
 	golang.org/x/net v0.34.0 // indirect
 	golang.org/x/sys v0.29.0 // indirect
-	golang.org/x/text v0.21.0 // indirect
+	golang.org/x/text v0.23.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
