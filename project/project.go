@@ -190,7 +190,12 @@ func (p *Project) OutputData() error {
 			if err != nil {
 				return fmt.Errorf("%w: unable to create file '%s'", err, releaseBodyFile)
 			}
-			defer f.Close()
+			defer func() {
+				if cerr := f.Close(); cerr != nil {
+					p.opts.Log("unable to close file '%s': %v", releaseBodyFile, cerr)
+					return
+				}
+			}()
 			for _, line := range p.nextRelease.Body[1:] {
 				_, err = fmt.Fprintln(f, line)
 				if err != nil {
@@ -214,7 +219,7 @@ func (p *Project) getReleaseSlug() string {
 func (p *Project) examineTags() error {
 	// Map changelog and git releases
 	for _, rel := range p.changelog.Releases {
-		if "unreleased" == strings.ToLower(rel.Version) {
+		if strings.ToLower(rel.Version) == "unreleased" {
 			continue
 		}
 
@@ -239,7 +244,12 @@ func (p *Project) processChangelog() error {
 	if err != nil {
 		return fmt.Errorf("%w: unable to open the changelog file found here: '%s'", err, path)
 	}
-	defer f.Close()
+	defer func() {
+		if cerr := f.Close(); cerr != nil {
+			p.opts.Log("unable to close file '%s': %v", releaseBodyFile, cerr)
+			return
+		}
+	}()
 
 	p.changelog, err = changelog.Parse(f)
 	if err != nil {

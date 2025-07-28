@@ -58,7 +58,12 @@ func (p *Project) generateMesonWrapper(path, tgzFile string) error {
 	if err != nil {
 		return fmt.Errorf("%w: unable to write to file '%s'", err, file)
 	}
-	f.Close()
+	func() {
+		if cerr := f.Close(); cerr != nil {
+			p.opts.Log("unable to close file '%s': %v", releaseBodyFile, cerr)
+			return
+		}
+	}()
 
 	return nil
 }

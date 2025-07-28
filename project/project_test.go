@@ -37,7 +37,12 @@ func writeFile(fs *afero.Afero, name, contents string) error {
 	if err != nil {
 		return err
 	}
-	defer f.Close()
+	defer func() {
+		if err := f.Close(); err != nil {
+			fmt.Fprintf(os.Stderr, "unable to close file '%s': %v\n", f, err)
+			return
+		}
+	}()
 
 	n, err := f.WriteString(contents)
 	if err != nil {
