@@ -17,7 +17,12 @@ func sha(fs *afero.Afero, file string) ([]byte, error) {
 	if err != nil {
 		return []byte{}, fmt.Errorf("%w: unable to open file '%s'", err, file)
 	}
-	defer f.Close()
+	defer func() {
+		if cerr := f.Close(); cerr != nil {
+			fmt.Fprintf(os.Stderr, "unable to close file '%s': %v\n", file, cerr)
+			return
+		}
+	}()
 
 	h := sha256.New()
 	_, err = io.Copy(h, f)
@@ -55,7 +60,13 @@ func generateSha256Sum(fs *afero.Afero, name, path string) error {
 	if err != nil {
 		return fmt.Errorf("%w: unable to create file '%s'", err, shaFile)
 	}
-	defer f.Close()
+
+	defer func() {
+		if err := f.Close(); err != nil {
+			fmt.Fprintf(os.Stderr, "unable to close file '%s': %v\n", f, err)
+			return
+		}
+	}()
 
 	for _, line := range lines {
 		_, err = fmt.Fprintln(f, line)
