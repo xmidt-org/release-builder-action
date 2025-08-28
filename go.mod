@@ -6,7 +6,7 @@ require (
 	github.com/go-git/go-git/v5 v5.16.2
 	github.com/sethvargo/go-githubactions v1.3.1
 	github.com/spf13/afero v1.14.0
-	github.com/stretchr/testify v1.11.0
+	github.com/stretchr/testify v1.11.1
 	github.com/xmidt-org/gokeepachangelog v0.0.2
 )
 
